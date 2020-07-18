@@ -1,0 +1,24 @@
+<?php 
+include "../config/db_connection.php";
+
+$sql_select = "SELECT * FROM sr_event";
+  foreach ($conn->query($sql_select) as $row)
+  {
+  	$sig_class_id = $row['sig_class_id'];
+  	$sig_name = $row['sig_name'];
+  	$ip_src = $row['ip_src'];
+  	$ip_dst = $row['ip_dst'];
+  	$timestamp = $row['timestamp'];
+	$token = "bot1134714364:AAGubrGz9t9RP_Y7NUF0taViVT68w9nHhwE";
+	$chatid = "978129478";
+		if($sig_class_id==0) {
+			$content = "Terjadi serangan " . $sig_name . " dari " . $ip_src . " ke " . $ip_dst . " pada tanggal " . $timestamp;
+				sendTelegram{
+				curl -s -X POST
+					https://api.telegram.org/bot$token/sendMessage 
+					-d text ="$ip_src " $chatid, $content, $token);
+				$update = mysqli_query($conn, "UPDATE sr_event SET sig_class_id = '1' WHERE sig_name = '$row[sig_name]' AND timestamp ='$row[timestamp]' AND ip_src='$row[ip_src]' AND ipd_dst='$row[ip_dst]'"); 
+		}
+	}
+
+?>
