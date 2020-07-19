@@ -4,10 +4,27 @@ import logging
 import requests
 import threading
 import logging.config
+import mysql.connector
 
 from telepot.loop import MessageLoop
 
 logging.config.fileConfig('public/config/logging.config.ini')
+
+def getConnection():
+    mydb = mysql.connector.connect(
+        host="111.92.169.31",
+        user="snort",
+        password="snort26"
+    )
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * FROM sr_redirected_ip")
+
+    myresult = mycursor.fetchall()
+
+    for x in myresult:
+        print(x)
 
 
 def handle(msg):
@@ -21,11 +38,10 @@ def handle(msg):
     logging.info('content_type is: {}'.format(content_type))
     logging.info('chat_id is: {}'.format(chat_id))
 
-    if command == '/start':
+    if command == '/view':
         bot.sendMessage (chat_id, str("fuck u"))
-    
-    elif command == '/keluhan':
-        bot.sendMessage (chat_id, str("fuck u too"))
+        getConnection()
+
 
 if __name__ == "__main__":
     bot = telepot.Bot('1134714364:AAGubrGz9t9RP_Y7NUF0taViVT68w9nHhwE')
