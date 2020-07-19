@@ -1,0 +1,10 @@
+version: '3'
+services:
+    apps:
+        container_name: 'farhan-app-thesis'
+        build:
+            context: ./
+            dockerfile: ./etc/docker/apps/Dockerfile
+        command: python app.py
+        volumes:
+            - .:/usr/thesis
